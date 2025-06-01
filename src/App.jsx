@@ -1,23 +1,33 @@
+// App.jsx
 import React from "react";
-import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import About from "./components/About.jsx";
-import Home from "./components/Home.jsx";
-import Predict from "./components/Predict.jsx";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+
+import Layout from "./components/Layout";
+import { About } from "./pages/About";
+import Home from "./pages/Home";
+import Predict from "./pages/Predict";
 
 function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <Link to="/">Home</Link> |<Link to="/about">About</Link> |
-          <Link to="/predict">Predict</Link>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/predict" element={<Predict />} />
-        </Routes>
-      </div>
+      {/* The Layout component renders the Navigation bar and an <Outlet /> */}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* Index route will render <Home /> at "/" */}
+          <Route index element={<Home />} />
+          {/* "/about" → <About /> */}
+          <Route path="about" element={<About />} />
+          {/* "/predict" → <Predict /> */}
+          <Route path="predict" element={<Predict />} />
+          {/* Redirect any unknown URL back to "/" */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Route>
+      </Routes>
     </Router>
   );
 }
